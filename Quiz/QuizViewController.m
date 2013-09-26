@@ -14,16 +14,46 @@
 
 @implementation QuizViewController
 
-- (void)viewDidLoad
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        questions = [[NSMutableArray alloc] init];
+        answers = [[NSMutableArray alloc] init];
+        
+        [questions addObject:@"What is 3 + 4?"];
+        [answers addObject:@"7"];
+
+        [questions addObject:@"What is the capital of New York?"];
+        [answers addObject:@"Albany"];
+
+        [questions addObject:@"From what is cognac made?"];
+        [answers addObject:@"Grapes"];
+         
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)showQuestion:(id)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    currentQuestionIndex++;
+    
+    if (currentQuestionIndex == [questions count]) {
+        currentQuestionIndex = 0;
+    }
+    
+    NSString *quesiton = [questions objectAtIndex:currentQuestionIndex];
+    NSLog(@"Displaying quesiton: %@", quesiton);
+    
+    [questionField setText:quesiton];
+    
+    [answerField setText:@"??"];
+}
+
+- (IBAction)showAnswer:(id)sender
+{
+    NSString *answer = [answers objectAtIndex:currentQuestionIndex];
+    [answerField setText:answer];
 }
 
 @end
